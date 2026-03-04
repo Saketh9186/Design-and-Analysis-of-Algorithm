@@ -46,6 +46,8 @@ int main()
         k = path[k];
         printf(" -> %d", k);
     }
+    printf("\n");
 
     return 0;
 }
+
