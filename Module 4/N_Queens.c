@@ -1,40 +1,40 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int n, x[20];
+int x[10], n;
 
-int place(int k, int i) {
-    int j;
-    for (j = 1; j < k; j++) {
-        if (x[j] == i || abs(x[j] - i) == abs(j - k))
+int place(int k, int col)
+{
+    int i;
+    for(i = 1; i < k; i++)
+        if(x[i] == col || abs(x[i] - col) == abs(i - k))
             return 0;
-    }
     return 1;
 }
 
-void nqueen(int k) {
-    int i, j;
+void nqueens(int k)
+{
+    int i;
 
-    for (i = 1; i <= n; i++) {
-        if (place(k, i)) {
+    for(i = 1; i <= n; i++)
+        if(place(k, i))
+        {
             x[k] = i;
 
-            if (k == n) {
-                for (j = 1; j <= n; j++)
-                    printf("%d ", x[j]);
+            if(k == n)
+            {
+                for(i = 1; i <= n; i++)
+                    printf("%d ", x[i]);
                 printf("\n");
-            } else {
-                nqueen(k + 1);
             }
+            else
+                nqueens(k + 1);
         }
-    }
 }
 
-int main() {
-    printf("Enter number of queens: ");
+int main()
+{
     scanf("%d", &n);
-
-    nqueen(1);
-
+    nqueens(1);
     return 0;
 }

@@ -1,42 +1,41 @@
 #include <stdio.h>
 
-#define MAX 10
+int graph[10][10], visited[10], n;
 
-int visited[MAX];
-
-void dfs(int graph[MAX][MAX], int n, int node) {
-    int i;
-
+void dfs(int node) {
     printf("%d ", node);
     visited[node] = 1;
 
-    for (i = 0; i < n; i++) {
-        if (graph[node][i] && !visited[i]) {
-            dfs(graph, n, i);
+    int i;
+    for(i = 0; i < n; i++) {
+        if(graph[node][i] == 1 && visited[i] == 0) {
+            dfs(i);
         }
     }
 }
 
 int main() {
-    int graph[MAX][MAX], n, i, j, start;
+    int i, j, start;
 
-    printf("Enter number of vertices: ");
+    printf("Enter number of nodes: ");
     scanf("%d", &n);
 
     printf("Enter adjacency matrix:\n");
-    for (i = 0; i < n; i++)
-        for (j = 0; j < n; j++)
+    for(i = 0; i < n; i++) {
+        for(j = 0; j < n; j++) {
             scanf("%d", &graph[i][j]);
+        }
+    }
 
-    printf("Enter starting vertex: ");
+    printf("Enter starting node: ");
     scanf("%d", &start);
 
-    for (i = 0; i < n; i++)
+    for(i = 0; i < n; i++) {
         visited[i] = 0;
+    }
 
-    printf("DFS: ");
-    dfs(graph, n, start);
-    printf("\n");
+    printf("DFS Traversal: ");
+    dfs(start);
 
     return 0;
 }

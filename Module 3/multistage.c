@@ -2,52 +2,29 @@
 
 int main()
 {
-    int n, i, j, k;
-    int cost[10][10], dist[10], path[10];
-    int min;
+    int n;
+    int cost[10][10], dist[10];
+    int i, j;
 
-    printf("Enter number of vertices: ");
+    printf("Enter number of nodes: ");
     scanf("%d", &n);
 
-    printf("Enter cost adjacency matrix:\n");
+    printf("Enter cost matrix (0 if no edge):\n");
     for(i = 1; i <= n; i++)
-    {
         for(j = 1; j <= n; j++)
-        {
             scanf("%d", &cost[i][j]);
-        }
-    }
+
+    for(i = 1; i <= n; i++)
+        dist[i] = 999;
 
     dist[n] = 0;
 
-    for(i = n-1; i >= 1; i--)
-    {
-        min = 999;
-
-        for(j = i+1; j <= n; j++)
-        {
-            if(cost[i][j] != 0 && cost[i][j] + dist[j] < min)
-            {
-                min = cost[i][j] + dist[j];
-                path[i] = j;
-            }
-        }
-
-        dist[i] = min;
-    }
+    for(i = n - 1; i >= 1; i--)
+        for(j = i + 1; j <= n; j++)
+            if(cost[i][j] != 0 && dist[i] > cost[i][j] + dist[j])
+                dist[i] = cost[i][j] + dist[j];
 
     printf("Minimum cost = %d\n", dist[1]);
 
-    printf("Path: 1");
-    k = 1;
-
-    while(k != n)
-    {
-        k = path[k];
-        printf(" -> %d", k);
-    }
-    printf("\n");
-
     return 0;
 }
-

@@ -1,58 +1,45 @@
 #include <stdio.h>
 
-int n;
-int set[10];
-int subset[10];
+int w[10], x[10], n, target;
 
-void sumOfSubsets(int i, int sum, int target)
-{
-    int j;
+void sumofsubsets(int s, int k) {
+    int i;
 
-    if(sum == target)
-    {
+    if(s == target) {
         printf("Subset: ");
-        for(j = 0; j < i; j++)
-        {
-            if(subset[j] != -1)
-            {
-                printf("%d ", subset[j]);
-            }
+        for(i = 0; i < k; i++) {
+            if(x[i] == 1)
+                printf("%d ", w[i]);
         }
         printf("\n");
         return;
     }
 
-    if(i >= n || sum > target)
-    {
+    if(k >= n || s > target)
         return;
-    }
 
-    subset[i] = set[i];
-    sumOfSubsets(i + 1, sum + set[i], target);
-
-    subset[i] = -1;
-    sumOfSubsets(i + 1, sum, target);
+    x[k] = 1;
+    sumofsubsets(s + w[k], k + 1);
+ 
+    x[k] = 0;
+    sumofsubsets(s, k + 1);
 }
 
-int main()
-{
-    int i, target;
+int main() {
+    int i;
 
     printf("Enter number of elements: ");
     scanf("%d", &n);
 
     printf("Enter elements:\n");
-    for(i = 0; i < n; i++)
-    {
-        scanf("%d", &set[i]);
-        subset[i] = -1;
+    for(i = 0; i < n; i++) {
+        scanf("%d", &w[i]);
     }
 
     printf("Enter target sum: ");
     scanf("%d", &target);
 
-    printf("Subsets with given sum:\n");
-    sumOfSubsets(0, 0, target);
+    sumofsubsets(0, 0);
 
     return 0;
 }

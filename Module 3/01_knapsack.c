@@ -3,64 +3,49 @@
 int max(int a, int b)
 {
     if(a > b)
-    {
         return a;
-    }
     else
-    {
         return b;
-    }
 }
 
 int main()
 {
-    int n;
+    int n, W;
+    int wt[10], val[10];
+    int dp[10][10];
     int i, j;
 
     printf("Enter number of items: ");
     scanf("%d", &n);
 
-    int weight[n];
-    int value[n];
+    printf("Enter weights:\n");
+    for(i = 1; i <= n; i++)
+        scanf("%d", &wt[i]);
 
-    printf("Enter weights of items:\n");
-    for(i = 0; i < n; i++)
-    {
-        scanf("%d", &weight[i]);
-    }
+    printf("Enter values:\n");
+    for(i = 1; i <= n; i++)
+        scanf("%d", &val[i]);
 
-    printf("Enter values of items:\n");
-    for(i = 0; i < n; i++)
-    {
-        scanf("%d", &value[i]);
-    }
-
-    int W;
-    printf("Enter capacity of knapsack: ");
+    printf("Enter capacity: ");
     scanf("%d", &W);
 
-    int dp[n + 1][W + 1];
-
     for(i = 0; i <= n; i++)
-    {
         for(j = 0; j <= W; j++)
-        {
             if(i == 0 || j == 0)
-            {
                 dp[i][j] = 0;
-            }
-            else if(weight[i - 1] <= j)
-            {
-                dp[i][j] = max(value[i - 1] + dp[i - 1][j - weight[i - 1]], dp[i - 1][j]);
-            }
+
+    for(i = 1; i <= n; i++)
+    {
+        for(j = 1; j <= W; j++)
+        {
+            if(wt[i] <= j)
+                dp[i][j] = max(val[i] + dp[i-1][j-wt[i]], dp[i-1][j]);
             else
-            {
-                dp[i][j] = dp[i - 1][j];
-            }
+                dp[i][j] = dp[i-1][j];
         }
     }
 
-    printf("Maximum value = %d\n", dp[n][W]);
+    printf("Maximum profit = %d\n", dp[n][W]);
 
     return 0;
 }
